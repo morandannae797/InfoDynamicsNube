@@ -1,0 +1,385 @@
+###COMO DESDE EL PRINCIPIO AQUI TODOS TIENE LA MISMA CONTRA
+### AQUI SOLO EXISTE UN ADMIN (MANAGER) YA QUE ES LA BD OFICIAL
+### OJO YA LOS ADMINISTRADORES SON MANAGERSSSS EL CONCEPTO DE 
+### ADMINISTRADOR YA NO EXISTE, SOLO MANAGERSSSS
+
+### LOGIN COMO  MANAGER CON NUMERO
+POST https://localhost:7293/api/LogIn/login
+Content-Type: application/json
+
+{
+  "identificador": "1000001",
+  "contrasena": "hash123"
+}     
+
+### LOGIN COMO MANAGER CON CORREO
+POST https://localhost:7293/api/LogIn/login
+Content-Type: application/json
+
+{
+  "identificador": "arahel.sapi@empresa.com",
+  "contrasena": "hash123"
+}
+
+### LOGIN COMO  EMPLEADO CON NUMERO
+POST https://localhost:7293/api/LogIn/login
+Content-Type: application/json
+
+{
+  "identificador": "1000002",
+  "contrasena": "Nuevascosas683!@$"
+}   
+
+### CAMBIAR CONTRASENA EMPLEADO
+POST https://localhost:7293/api/Usuario/1000002/cambiar-contrasena
+Content-Type: application/json
+
+{
+  "contrasenaActual": "Nuevascosas683!@$",
+  "nuevaContrasena": "Nuevascosas683!@$",
+  "confirmarNuevaContrasena": "Nuevascosas683!@$"
+}
+
+### RESTABLECER CONTRASENA EMPLEADO
+POST https://localhost:7293/api/Usuario/1000002/restablecer-contrasena
+Content-Type: application/json
+
+{
+  "nuevaContrasena": "Nuevascosas683!@$",
+  "confirmarNuevaContrasena": "Nuevascosas683!@$"
+}
+
+### LOGIN COMO MANAGER
+POST https://localhost:7293/api/LogIn/login
+Content-Type: application/json
+
+{
+    "identificador": "1000001",
+    "contrasena": "hash123"
+}
+
+### EMPLEADO QUE SI PERTENECE AL MANAGER
+GET https://localhost:7293/api/Usuario/1000002
+
+### EMPLEADO QUE NO PERTENECE
+GET https://localhost:7293/api/Usuario/1000031
+
+### TODAS LAS EMPRESAS
+GET https://localhost:7293/api/empresa
+Accept: application/json
+
+### POR ID
+GET https://localhost:7293/api/empresa/1
+Accept: application/json
+
+### CREAR UNA EMPRESA
+POST https://localhost:7293/api/empresa
+Content-Type: application/json
+
+{
+  "nombre": ""
+}
+
+### ERROR DE DUPLICADO
+POST https://localhost:7293/api/empresa
+Content-Type: application/json
+
+{
+  "nombre": "Sony"
+}
+
+### CREAR OTRA EMPRESA
+POST https://localhost:7293/api/empresa
+Content-Type: application/json
+
+{
+
+ "nombre": "kuromip2",
+  "tipoProyecto": "Ambos"
+}
+
+### ACTUALIZAR EMPRESA
+POST https://localhost:7293/api/empresa/update/5
+Content-Type: application/json
+
+{
+  "idEmpresa": 5,
+  "nombre": "Sony Updated",
+  "tipoProyecto": "Ambos"
+}
+
+### EL ID NO COINCIDE
+POST https://localhost:7293/api/empresa/update/2
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "nombre": "Sony"
+
+}
+
+### VER PROYECTOS
+GET https://localhost:7293/api/proyecto
+
+
+
+##################################################
+### EMPLEADO SOLICITA VACACIONES
+##################################################
+
+POST https://localhost:7293/api/Vacacion
+Content-Type: application/json
+
+{
+  "fechaInicio": "2026-06-10",
+  "fechaFin": "2026-06-15"
+}
+
+
+
+##################################################
+### ERROR FECHA INVALIDA
+##################################################
+
+POST https://localhost:7293/api/Vacacion
+Authorization: Bearer TOKEN_EMPLEADO
+Content-Type: application/json
+
+{
+  "fechaInicio": "2026-06-20",
+  "fechaFin": "2026-06-10"
+}
+
+
+
+##################################################
+### MANAGER CONSULTA SOLICITUDES
+##################################################
+
+GET https://localhost:7293/api/Vacacion
+
+
+
+##################################################
+### VER UNA SOLICITUD
+##################################################
+
+GET https://localhost:7293/api/Vacacion/1
+
+
+
+##################################################
+### APROBAR SOLICITUD
+##################################################
+
+POST https://localhost:7293/api/Vacacion/1/evaluar
+Content-Type: application/json
+
+{
+  "estadoDecision": "Aprobada"
+}
+
+
+
+##################################################
+### RECHAZAR SOLICITUD
+##################################################
+
+POST https://localhost:7293/api/Vacacion/2/evaluar
+Content-Type: application/json
+
+{
+  "estadoDecision": "Rechazada"
+}
+
+
+##################################################
+### ERROR ESTADO INVALIDO
+##################################################
+
+POST https://localhost:7293/api/Vacacion/1/evaluar
+Authorization: Bearer TOKEN_MANAGER
+Content-Type: application/json
+
+{
+  "estadoDecision": "Pendiente"
+}
+
+
+##################################################
+### GENERAR PERIODO
+##################################################
+
+POST https://localhost:7293/api/Periodo/generar
+
+
+
+##################################################
+### ERROR: INTENTAR GENERAR OTRO PERIODO ANTES DE 21 DIAS
+##################################################
+
+POST https://localhost:7293/api/Periodo/generar
+
+
+
+
+##################################################
+### VER PERIODOS
+##################################################
+
+GET https://localhost:7293/api/Periodo
+
+
+
+
+##################################################
+### VER PERIODO POR ID
+##################################################
+
+GET https://localhost:7293/api/Periodo/1
+
+
+##################################################
+### EMPLEADO SOLICITA VACACIONES EN PERIODO ABIERTO
+##################################################
+
+POST https://localhost:7293/api/Vacacion
+Content-Type: application/json
+
+{
+  "fechaInicio": "2026-06-10",
+  "fechaFin": "2026-06-15"
+}
+
+
+
+##################################################
+### MANAGER INTENTA SOLICITAR VACACIONES
+##################################################
+
+POST https://localhost:7293/api/Vacacion
+Authorization: Bearer TOKEN_MANAGER
+Content-Type: application/json
+
+{
+  "fechaInicio": "2026-08-10",
+  "fechaFin": "2026-06-15"
+}
+
+
+
+##################################################
+### MANAGER APRUEBA SOLICITUD
+##################################################
+
+POST https://localhost:7293/api/Vacacion/1/evaluar
+Authorization: Bearer TOKEN_MANAGER
+Content-Type: application/json
+
+{
+  "estadoDecision": "Aprobada"
+}
+
+##################################################
+### EMPLEADO REGISTRA JORNADA
+##################################################
+
+POST https://localhost:7293/api/RegistroJornada
+Content-Type: application/json
+
+{
+  "fecha": "2026-06-10",
+  "horas": 8,
+  "noUsuario": 1000002,
+  "periodoId": 1,
+  "codigo": "L001"
+}
+
+
+
+##################################################
+### EMPLEADO EDITA JORNADA
+##################################################
+
+POST https://localhost:7293/api/RegistroJornada/1
+Content-Type: application/json
+
+{
+  "registroId": 1,
+  "fecha": "2026-06-10",
+  "horas": 6,
+  "noUsuario": 1000002,
+  "periodoId": 1,
+  "codigo": "L001"
+}
+
+
+
+##################################################
+### ERROR HORAS NEGATIVAS
+##################################################
+
+POST https://localhost:7293/api/RegistroJornada
+Content-Type: application/json
+
+{
+  "fecha": "2026-08-10",
+  "horas": -5,
+  "noUsuario": 1000002,
+  "periodoId": 1,
+  "codigo": "L001"
+}
+
+
+
+##################################################
+### ERROR CODIGO INVALIDO
+##################################################
+
+POST https://localhost:7293/api/RegistroJornada
+Content-Type: application/json
+
+{
+  "fecha": "2026-06-10",
+  "horas": 8,
+  "noUsuario": 1000002,
+  "periodoId": 1,
+  "codigo": "L001"
+}
+
+
+
+##################################################
+### ERROR REGISTRO DUPLICADO
+##################################################
+
+POST https://localhost:7293/api/RegistroJornada
+Content-Type: application/json
+
+{
+
+  "Registroid": 1,
+  "fecha": "2026-06-10",
+  "horas": 8,
+  "noUsuario": 1000002,
+  "periodoId": 1,
+  "codigo": "L001"
+}
+
+
+
+##################################################
+### MANAGER INTENTA REGISTRAR EN PERIODO ABIERTO
+##################################################
+
+POST https://localhost:7293/api/Registro
+Authorization: Bearer TOKEN_MANAGER
+Content-Type: application/json
+
+{
+  "fecha": "2026-06-10",
+  "horas": 8,
+  "noUsuario": 1000001,
+  "periodoId": 1,
+  "codigo": "L001"
+}
