@@ -129,6 +129,20 @@ namespace InfoDynamics.Aplicacion.servicios.Servicios
             return usuario;
         }
 
+    //    public async Task<Usuario> Enviarresetcodigo(OneTimePassDto dto)
+      //  {
+       //     var ContraTemporal = GeneradorContrasena.Generarcontrasenatemporal();
+            
+
+         //   await _emailService.SendTemporaryPasswordAsync(
+   // usuario.email,
+   // usuario.nombre,
+   // ContraTemporal,
+   // );
+
+            
+//        }
+
         public async Task<Usuario?> FindByEmailAsync(string email)
         {
             return await _usuarioRepo.GetAsync(
