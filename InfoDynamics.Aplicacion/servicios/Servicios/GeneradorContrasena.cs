@@ -41,4 +41,5 @@ namespace InfoDynamics.Aplicacion.servicios.Servicios
                 return new string(RESET);
             }
         }
+    }
 }

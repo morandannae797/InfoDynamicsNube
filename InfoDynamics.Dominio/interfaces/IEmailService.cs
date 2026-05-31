@@ -14,5 +14,10 @@ namespace InfoDynamics.Dominio.interfaces
            string nombreEmpleado,
            string temporaryPassword,
            string loginUrl);
+        Task EnvioResetContra(
+string correoDestino,
+string nombreEmpleado,
+string digitoreseteo
+);
     }
 }

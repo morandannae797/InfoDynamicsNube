@@ -137,14 +137,14 @@ namespace InfoDynamics.Infraestructura.Processors
 
             await SendEmailAsync(correoDestino, asunto, html);
         }
-    }
+    
      public async Task EnvioResetContra(
     string correoDestino,
     string nombreEmpleado,
-    string reset,
-    string loginUrl)
+    string digitoreseteo
+    )
         {
-            var asunto = "Acceso a InfoDynamics";
+            var asunto = "Reseteo de contraseña para InfoDynamics";
 
             var html = $"""
     <!DOCTYPE html>
@@ -162,19 +162,16 @@ namespace InfoDynamics.Infraestructura.Processors
         </h1>
 
         <p style="margin:0 0 20px;font-size:15px;color:#1a1a1a;">
-          Hola <strong>{nombreEmpleado}</strong>, tu cuenta en InfoDynamics ha sido creada.
+          Hola se ha solicitado el cambio de .
         </p>
 
         <p style="margin:0 0 4px;font-size:13px;color:#9b59b6;">Correo electrónico</p>
         <p style="margin:0 0 16px;font-size:15px;color:#1a1a1a;">{correoDestino}</p>
 
-        <p style="margin:0 0 4px;font-size:13px;color:#9b59b6;">Contraseña temporal</p>
-        <p style="margin:0 0 24px;font-size:15px;color:#1a1a1a;">{temporaryPassword}</p>
+        <p style="margin:0 0 4px;font-size:13px;color:#9b59b6;">Codigo de verificacion</p>
+        <p style="margin:0 0 24px;font-size:15px;color:#1a1a1a;">{digitoreseteo}</p>
 
-        <p style="margin:0 0 28px;font-size:15px;color:#1a1a1a;">
-          El siguiente enlace te redirigirá a la página de inicio de sesión:
-          <a href="{loginUrl}" style="color:#9b59b6;text-decoration:none;font-weight:600;">{loginUrl}</a>
-        </p>
+        
 
         <p style="margin:0;font-size:12px;color:#aaaaaa;text-align:center;">
           Este es un mensaje automático. No respondas a este correo.
