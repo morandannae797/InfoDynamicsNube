@@ -108,11 +108,8 @@ namespace InfoDynamics.Aplicacion.servicios.Servicios
 
             await _usuarioRepo.AddAsync(usuario);
 
-            await _emailService.SendTemporaryPasswordAsync(
-    usuario.email,
-    usuario.nombre,
-    ContraTemporal,
-    "https://www.infodynamics.lat/HTML/Login.html");
+            await _emailService.SendTemporaryPasswordAsync(usuario.email, usuario.nombre, ContraTemporal,
+                    "https://www.infodynamics.lat/HTML/Login.html");
 
             var contrasenaHistorial = new HistorialContrasena
             {

@@ -19,16 +19,19 @@ namespace InfoDynamics.API.Controllers
         private readonly IContrasenaService _contrasenaService;
         private readonly IReadServiceAsync<UsuarioResponseDTO> _readService;
         private readonly Iusuarioservicio _usuarioServicio;
+        private readonly CodeVerificacionServicio _codeVerificacionService;
 
         public UsuarioController(
 
             IContrasenaService contrasenaService,
             IReadServiceAsync<UsuarioResponseDTO> readService,
-            Iusuarioservicio usuarioServicio)
+            Iusuarioservicio usuarioServicio,
+            CodeVerificacionServicio codeVerificacionService)
         {
             _contrasenaService = contrasenaService;
             _readService = readService;
             _usuarioServicio = usuarioServicio;
+            _codeVerificacionService = codeVerificacionService;
         }
 
 
@@ -318,6 +321,29 @@ namespace InfoDynamics.API.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpPost("solicitar-codigo-recuperacion")]
+        public async Task<IActionResult> SolicitarCodigo([FromBody] SolicitarCodigoDto dto)
+        {
+            await _codeVerificacionService.GenerarYEnviarCodigoAsync(dto.Email);
+
+            return Ok(new { message = "Código enviado" });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("validar-codigo-recuperacion")]
+        public async Task<IActionResult> ValidarCodigo([FromBody] ValidarCodigoDto dto)
+        {
+            var valido = await _codeVerificacionService.ValidarCodigoAsync(
+                dto.NoUsuario,
+                dto.Codigo
+            );
+
+            if (!valido)
+                return BadRequest(new { message = "Código inválido o expirado" });
+
+            return Ok(new { message = "Código válido" });
+        }
 
     }
 

@@ -366,7 +366,14 @@ Content-Type: application/json
   "codigo": "L001"
 }
 
+### LOGIN COMO  MANAGER CON NUMERO
+POST https://localhost:7293/api/LogIn/login
+Content-Type: application/json
 
+{
+  "identificador": "1000001",
+  "contrasena": "hash123"
+}   
 
 ##################################################
 ### MANAGER INTENTA REGISTRAR EN PERIODO ABIERTO
@@ -382,4 +389,39 @@ Content-Type: application/json
   "noUsuario": 1000001,
   "periodoId": 1,
   "codigo": "L001"
+}
+
+##################################################
+### SOLICITAR CODIGO OTP PARA RECUPERAR CONTRASENA
+##################################################
+
+POST https://localhost:7293/api/Usuario/solicitar-codigo-recuperacion
+Content-Type: application/json
+
+{
+  "email": "arahel.sapi@empresa.com"
+}
+
+##################################################
+### VALIDAR CODIGO OTP
+##################################################
+
+POST https://localhost:7293/api/Usuario/validar-codigo-recuperacion
+Content-Type: application/json
+
+{
+  "noUsuario": 1000001,
+  "codigo": "123456"
+}
+
+##################################################
+### RESTABLECER CONTRASENA CON FLUJO OTP
+##################################################
+
+POST https://localhost:7293/api/Usuario/restablecer-contrasena
+Content-Type: application/json
+
+{
+  "nuevaContrasena": "NuevaPass123!",
+  "confirmarNuevaContrasena": "NuevaPass123!"
 }
